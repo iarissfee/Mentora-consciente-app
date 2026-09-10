@@ -315,7 +315,11 @@
           <h1 class="font-display text-[26px] mt-2 leading-tight">Un espacio para<br/>volver al cuerpo.</h1>
         </div>
 
-        <div class="card mt-6 p-7 flex flex-col items-center text-center">
+        <div class="card mt-6 overflow-hidden" style="aspect-ratio:16/9;">
+          <video src="assets/meditaciones-loop.mp4" autoplay muted loop playsinline disablepictureinpicture style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+        </div>
+
+        <div class="card mt-4 p-7 flex flex-col items-center text-center">
           <div class="relative w-[168px] h-[168px] flex items-center justify-center">
             <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#4FD8C4" stroke-width="1" opacity="0.35"/></svg>
             <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#4FD8C4" stroke-width="1.1" opacity="0.6"/></svg>
@@ -750,6 +754,12 @@
     document.getElementById('nav-' + name).classList.add('active');
     document.getElementById('tabTitle').textContent = titles[name];
     document.getElementById('screenWrap').scrollTop = 0;
+    // el video ambiente de Meditaciones queda pausado si el navegador ignoró el
+    // autoplay mientras la pestaña estaba oculta (display:none) al cargar la página.
+    if (name === 'meditaciones'){
+      const loopVideo = document.querySelector('#tab-meditaciones video');
+      if (loopVideo && loopVideo.paused) loopVideo.play().catch(() => {});
+    }
   }
   document.getElementById('tabTitle').textContent = titles.inicio;
 
