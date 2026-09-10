@@ -30,7 +30,7 @@
     --sage:#2FF0D4;
     --sage-deep:#0BA89A;
     --sage-pale:#163B3A;
-    --gold:#B48EF0;
+    --gold:#C48CFF;
     --gold-pale:#362951;
     --line:#2C3856;
   }
@@ -44,7 +44,7 @@
   .phone{
     position:relative; width:390px; max-width:94vw; height:844px; max-height:92vh;
     background:
-      linear-gradient(180deg, rgba(9,14,26,0.55) 0%, rgba(10,16,29,0.68) 45%, rgba(8,12,23,0.85) 100%),
+      linear-gradient(180deg, rgba(9,14,26,0.38) 0%, rgba(10,16,29,0.52) 45%, rgba(8,12,23,0.72) 100%),
       url('assets/realm-mobile.webp') 32% 58%/cover no-repeat;
     background-color:var(--bg);
     border-radius:52px; border:10px solid #14161F;
@@ -75,7 +75,7 @@
     background:rgba(24,36,58,0.5); border:1px solid rgba(255,255,255,0.12); border-radius:22px;
     backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   }
-  .btn-primary{ background:var(--sage-deep); color:#F4F1FB; }
+  .btn-primary{ background:var(--sage-deep); color:#F4F1FB; box-shadow:0 0 22px -4px rgba(47,240,212,0.55); }
   .btn-primary:active{ transform:scale(.98); }
   .btn-primary:disabled{ opacity:.55; }
   .btn-ghost{ background:var(--surface-soft); color:var(--ink); }
@@ -191,7 +191,7 @@
       <section class="tabpanel active" id="tab-inicio">
         <div id="installBanner" class="hidden card p-4 mt-1 mb-4 flex items-center gap-3" style="background:var(--gold-pale); border-color:var(--gold-pale);">
           <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--surface)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B48EF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
           </div>
           <div class="flex-1">
             <p class="text-[13.5px] font-medium">Instalá la app en tu celular</p>
@@ -203,7 +203,7 @@
         <div id="iosInstallBanner" class="hidden card p-4 mt-1 mb-4" style="background:var(--gold-pale); border-color:var(--gold-pale);">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--surface)">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B48EF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
             </div>
             <p class="text-[13.5px] font-medium flex-1">Instalá la app en tu iPhone</p>
           </div>
@@ -211,10 +211,6 @@
         </div>
 
         <div class="relative pt-2 pb-2">
-          <svg class="breathe-slow absolute -right-8 -top-6 opacity-40" width="150" height="150" viewBox="0 0 150 150">
-            <circle cx="75" cy="75" r="74" fill="none" stroke="#2FF0D4" stroke-width="1"/>
-            <circle cx="75" cy="75" r="54" fill="none" stroke="#2FF0D4" stroke-width="1"/>
-          </svg>
           <p class="eyebrow" id="dateLabel">—</p>
           <h1 class="font-display font-normal text-[32px] leading-[1.15] mt-2" id="greeting">Buen día</h1>
           <p class="text-[15px] mt-2" style="color:var(--ink-soft)">Qué bueno tenerte de vuelta. Tomemos un momento antes de seguir con tu día.</p>
@@ -245,7 +241,7 @@
 
         <a href="https://mentoraconsciente.onrender.com/" target="_blank" rel="noopener" class="rowbtn card mt-4 p-5 flex items-center gap-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B48EF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
           </div>
           <div class="flex-1">
             <p class="text-[14px] font-medium">Todos mis cursos y mi comunidad</p>
@@ -268,7 +264,7 @@
           <div class="relative w-[168px] h-[168px] flex items-center justify-center">
             <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#2FF0D4" stroke-width="1" opacity="0.35"/></svg>
             <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#2FF0D4" stroke-width="1.1" opacity="0.6"/></svg>
-            <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="background:var(--sage-pale)">
+            <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="background:var(--sage-pale); box-shadow:0 0 30px -2px rgba(47,240,212,0.5)">
               <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" fill="none" stroke="#0BA89A" stroke-width="1"/><circle cx="13" cy="13" r="7.5" fill="none" stroke="#0BA89A" stroke-width="1"/><circle cx="13" cy="13" r="3" fill="#0BA89A"/></svg>
             </div>
           </div>
@@ -288,7 +284,7 @@
             <button onclick="skipPlayer('lib',-15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Retroceder 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
-            <button id="lib-playBtn" onclick="togglePlayer('lib')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep)">
+            <button id="lib-playBtn" onclick="togglePlayer('lib')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
               <svg id="lib-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
               <svg id="lib-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
@@ -351,7 +347,7 @@
             <button onclick="skipPlayer('med',-15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Retroceder 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
-            <button id="med-playBtn" onclick="togglePlayer('med')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep)">
+            <button id="med-playBtn" onclick="togglePlayer('med')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
               <svg id="med-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
               <svg id="med-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
@@ -390,7 +386,7 @@
         <div class="card mt-6 overflow-hidden relative" style="aspect-ratio:4/3;">
           <img src="assets/no-estas-sola.webp" alt="" style="width:100%; height:100%; object-fit:cover; display:block;">
           <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,13,24,0.85) 0%, rgba(10,13,24,0.15) 55%, rgba(10,13,24,0) 75%);"></div>
-          <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="position:absolute; left:50%; top:38%; transform:translate(-50%,-50%); background:rgba(54,41,81,0.55); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.18);">
+          <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="position:absolute; left:50%; top:38%; transform:translate(-50%,-50%); background:rgba(54,41,81,0.55); backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,0.18); box-shadow:0 0 32px -2px rgba(196,140,255,0.55);">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E9DCFB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
           </div>
           <div style="position:absolute; left:20px; right:20px; bottom:16px;">
@@ -413,7 +409,7 @@
             <button onclick="skipPlayer('nes',-15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Retroceder 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
-            <button id="nes-playBtn" onclick="togglePlayer('nes')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep)">
+            <button id="nes-playBtn" onclick="togglePlayer('nes')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
               <svg id="nes-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
               <svg id="nes-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
@@ -516,7 +512,7 @@
         <p class="eyebrow mt-7 mb-3">Seguí conectada</p>
         <div class="space-y-2.5">
           <a href="assets/ebook-desprogramate.pdf" download target="_blank" rel="noopener" class="rowbtn card p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B48EF0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg></div>
             <div class="flex-1"><p class="text-[14px] font-medium">Ebook: Desprogramate</p><p class="text-[12px]" style="color:var(--ink-soft)">Descarga gratuita</p></div>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </a>
