@@ -1,13 +1,13 @@
 {
   "name": "Mentora Consciente",
   "short_name": "Mentora",
-  "description": "Meditaciones, el programa Volver a vos y tu diario personal.",
+  "description": "Meditaciones, audios de No estás sola y tu diario personal.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#381A46",
-  "theme_color": "#55306B",
+  "background_color": "#131A2E",
+  "theme_color": "#128F82",
   "icons": [
     {
       "src": "assets/icon-192.png",
