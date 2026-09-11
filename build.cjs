@@ -1,0 +1,10 @@
+const fs=require('node:fs');
+const raw=process.env.CAMPUS_URL;
+if(!raw)throw new Error('Falta CAMPUS_URL: configurá la dirección HTTPS del nuevo campus.');
+const campus=new URL(raw);
+if(campus.protocol!=='https:'||campus.username||campus.password)throw new Error('CAMPUS_URL debe ser una dirección HTTPS sin credenciales.');
+fs.mkdirSync('dist',{recursive:true});
+for(const name of ['assets','audios','favicon.png','manifest.json','sw.js'])fs.cpSync(name,'dist/'+name,{recursive:true});
+fs.writeFileSync('dist/index.html',fs.readFileSync('index.html','utf8').replaceAll('__CAMPUS_URL__',campus.href));
+fs.writeFileSync('dist/_headers','/sw.js\n  Cache-Control: no-cache\n/index.html\n  Cache-Control: no-cache\n');
+console.log('App preparada.');

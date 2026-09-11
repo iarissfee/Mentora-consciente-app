@@ -1,0 +1,1 @@
+App de Mentora para Cloudflare Pages. Rama: cloudflare-recovery. Comando de build: npm run build. Carpeta de salida: dist. Variable CAMPUS_URL: dirección HTTPS del campus recuperado. Autorizar el dominio nuevo en Firebase Authentication antes de probar el ingreso. Los datos y usuarios de Firebase no se modifican con este despliegue.

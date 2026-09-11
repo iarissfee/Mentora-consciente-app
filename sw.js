@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v1';
+const CACHE_NAME = 'mentora-app-cloudflare-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -22,7 +22,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
+      .then((names) => Promise.all(names.filter((name) => name.startsWith('mentora-app-') && name !== CACHE_NAME).map((name) => caches.delete(name))))
       .then(() => self.clients.claim())
   );
 });
@@ -34,13 +34,14 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   // No interceptamos audio, PDFs ni pedidos a otros orígenes (Firebase, YouTube, fuentes, etc.):
   // son pesados o dependen de la red, y no deben quedar pegados en el caché del celular.
-  if (url.origin !== self.location.origin || url.pathname.startsWith('/audios/') || url.pathname.endsWith('.pdf')) {
+  if (url.origin !== self.location.origin || url.pathname.includes('/audios/') || url.pathname.startsWith('/api/') || !url.pathname.startsWith(new URL(self.registration.scope).pathname) || url.pathname.endsWith('.pdf')) {
     return;
   }
 
   event.respondWith(
     fetch(req)
       .then((res) => {
+        if (!res.ok || req.headers.has('Range')) return res;
         const resClone = res.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(req, resClone));
         return res;
