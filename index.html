@@ -971,6 +971,12 @@
 
   /* ===================== diario ===================== */
   let diaryEntries = [];
+  let diaryLoaded = false;
+  function diaryStatus(text){
+    let el = document.getElementById("diaryStatus");
+    if (!el){ el = document.createElement("p"); el.id="diaryStatus"; el.setAttribute("role","status"); document.getElementById("diaryInput").after(el); }
+    el.textContent=text;
+  }
   function renderDiary(){
     const list = document.getElementById('diaryList');
     const empty = document.getElementById('diaryEmpty');
@@ -998,12 +1004,14 @@
     const text = input.value.trim();
     if (!text) return;
     const d = new Intl.DateTimeFormat('es-ES', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }).format(new Date());
+    if (!diaryLoaded){ diaryStatus('El diario todavía no está conectado. Tu texto sigue acá; volvé a intentar en unos segundos.'); return; }
     diaryEntries.push({ date: d, text });
     input.value = '';
     renderDiary();
     saveUserProgress();
   }
   function deleteDiaryEntry(i){
+    if (!diaryLoaded) return;
     diaryEntries.splice(i,1);
     renderDiary();
     saveUserProgress();
@@ -1019,27 +1027,59 @@
       .catch(() => 'Desconocido');
   }
   function saveUserProgress(){
-    if (!(fbOk && db && currentUid) || isAdmin) return;
-    db.collection('users').doc(currentUid).set({ diary: diaryEntries }, { merge: true })
-      .catch(err => console.warn('No se pudo guardar el progreso:', err.message));
-    db.collection('user_stats').doc(currentUid).set({
+    if (!(fbOk && db && currentUid && diaryLoaded)) return;
+    const uid = currentUid;
+    const snapshot = JSON.stringify(diaryEntries);
+    try {
+      localStorage.setItem('mentora-diary:' + uid, JSON.stringify(diaryEntries));
+      localStorage.setItem('mentora-diary-pending:' + uid, '1');
+      diaryStatus('Guardado en este dispositivo. Sincronizando…');
+    } catch (err) { diaryStatus('Sincronizando el diario…'); }
+    db.collection('users').doc(uid).set({ diary: diaryEntries }, { merge: true })
+      .then(() => {
+        try { if (localStorage.getItem('mentora-diary:' + uid) === snapshot) localStorage.removeItem('mentora-diary-pending:' + uid); } catch (err) {}
+        diaryStatus('Diario guardado.');
+      })
+      .catch(() => diaryStatus('No se pudo sincronizar. Si se guardó en este dispositivo, se conservará al volver a abrirlo.'));
+    if (!isAdmin) db.collection('user_stats').doc(uid).set({
       country: visitorCountry || 'Desconocido',
       diaryCount: diaryEntries.length,
       lastActive: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true }).catch(err => console.warn('No se pudo guardar la estadística:', err.message));
+    }, { merge: true }).catch(() => {});
   }
   function loadUserProgress(uid){
-    detectCountry().then(c => { visitorCountry = c; saveUserProgress(); });
-    db.collection('users').doc(uid).get().then(doc => {
-      if (doc.exists){
-        const data = doc.data();
-        diaryEntries = data.diary || [];
-      } else {
-        db.collection('users').doc(uid).set({ diary: [] });
+    diaryLoaded = false;
+    diaryEntries = [];
+    let local = null;
+    let pending = false;
+    try {
+      pending = localStorage.getItem('mentora-diary-pending:' + uid) === '1';
+      const raw = localStorage.getItem('mentora-diary:' + uid);
+      if (raw !== null) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) local = parsed;
       }
+    } catch (err) {}
+    if (local !== null) { diaryEntries = local; }
+    const initialSnapshot = JSON.stringify(diaryEntries);
+    renderDiary();
+    detectCountry().then(c => { visitorCountry = c; });
+    db.collection('users').doc(uid).get().then(doc => {
+      if (uid !== currentUid) return;
+      // Do not overwrite edits made while the cloud read was pending.
+      if (!pending && JSON.stringify(diaryEntries) === initialSnapshot) {
+        diaryEntries = doc.exists && Array.isArray(doc.data().diary) ? doc.data().diary : [];
+      }
+      diaryLoaded = true;
       renderDiary();
       saveUserProgress();
-    }).catch(err => console.warn('No se pudo leer el progreso:', err.message));
+    }).catch(() => {
+      if (uid !== currentUid) return;
+      diaryLoaded = local !== null;
+      diaryStatus(local !== null
+        ? 'Mostrando el diario guardado en este dispositivo. No se pudo conectar con la nube.'
+        : 'No se pudo cargar el diario. Tu texto no se borrará: volvé a intentar cuando haya conexión.');
+    });
   }
 
   /* ===================== estadísticas (solo admin) ===================== */
@@ -1104,11 +1144,8 @@
       loadLibraryAudios();
       loadDailyPhrases();
       loadHomeVideo();
-      if (!isAdmin){
-        loadUserProgress(user.uid);
-      } else {
-        loadAdminStats();
-      }
+      loadUserProgress(user.uid);
+      if (isAdmin) loadAdminStats();
     });
   }
 
