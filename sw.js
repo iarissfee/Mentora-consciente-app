@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-app-cloudflare-v2';
+const CACHE_NAME = 'mentora-app-cloudflare-v3';
 const APP_SHELL = [
   './',
   './index.html',

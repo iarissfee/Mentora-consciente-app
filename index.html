@@ -6,7 +6,7 @@
 <title>Mentora Consciente</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#88DCD8">
+<meta name="theme-color" content="#F4C1D7">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -22,21 +22,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <style>
   :root{
-    --bg:#F9F6FC;
-    --surface:#FFFFFF;
-    --surface-soft:#F0E8F7;
-    --ink:#443154;
-    --ink-soft:#87758F;
-    --sage:#62DCD5;
-    --sage-deep:#9163BA;
-    --sage-pale:#DCF7F4;
-    --gold:#EE9CC4;
-    --gold-pale:#F9E7F1;
-    --line:#E5D7EA;
+    --bg:#FFF7FA;
+    --surface:#FFFCFD;
+    --surface-soft:#F8ECF4;
+    --ink:#5B435E;
+    --ink-soft:#947D97;
+    --sage:#A6E7EA;
+    --sage-deep:#A06DC0;
+    --sage-pale:#E4F8F9;
+    --gold:#F3A6C9;
+    --gold-pale:#FCE9F1;
+    --line:#F1DCE8;
   }
   *{ box-sizing:border-box; }
   html,body{ height:100%; }
-  body{ background:linear-gradient(145deg,#E9E0FA 0%,#FCE7F0 48%,#D8F4F2 100%); font-family:'Work Sans', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  body{ background:linear-gradient(145deg,#FFF4F8 0%,#D6F0F5 48%,#F9D6E7 100%); font-family:'Work Sans', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
   .font-display{ font-family:'Fraunces', serif; }
   .font-editorial{ font-family:'Bodoni Moda', serif; }
 
@@ -44,7 +44,7 @@
   .phone{
     position:relative; width:390px; max-width:94vw; height:844px; max-height:92vh;
     background:
-      linear-gradient(180deg, rgba(251,238,249,0.15) 0%, rgba(173,132,206,0.22) 45%, rgba(70,117,152,0.42) 100%),
+      linear-gradient(180deg, rgba(255,226,240,0.12) 0%, rgba(206,234,243,0.17) 45%, rgba(185,143,204,0.23) 100%),
       url('assets/realm-mobile.webp') 32% 58%/cover no-repeat;
     background-color:var(--bg);
     border-radius:52px; border:10px solid #FFF8FE;
@@ -72,18 +72,18 @@
 
   .eyebrow{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; }
   .card{
-    background:rgba(255,255,255,0.76); border:1px solid rgba(255,255,255,0.80); border-radius:22px;
+    background:rgba(255,251,254,0.68); border:1px solid rgba(255,255,255,0.84); border-radius:22px;
     backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   }
-  .btn-primary{ background:linear-gradient(135deg,#9B6FC2,#D782B2); color:#FFFDFE; box-shadow:0 10px 24px -10px rgba(183,101,172,0.70); }
+  .btn-primary{ background:linear-gradient(135deg,#A46FC2,#DE8FBC); color:#FFFDFE; box-shadow:0 10px 24px -10px rgba(221,126,183,0.58); }
   .btn-primary:active{ transform:scale(.98); }
   .btn-primary:disabled{ opacity:.55; }
   .btn-ghost{ background:var(--surface-soft); color:var(--ink); }
 
   .bottomnav{
     position:absolute; left:0; right:0; bottom:0; padding:9px 4px calc(16px + env(safe-area-inset-bottom,0px));
-    background:rgba(255,250,254,0.88); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-    border-top:1px solid rgba(160,113,189,0.16); z-index:30;
+    background:rgba(255,250,254,0.92); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border-top:1px solid rgba(190,131,183,0.18); z-index:30;
   }
   .navbtn{ display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--ink-soft); transition:color .2s ease; flex:1; min-width:0; }
   .navbtn.active{ color:var(--sage-deep); }
@@ -131,12 +131,12 @@
     <div id="landingScreen" class="hidden landing-inner" style="position:absolute; inset:0; z-index:100; overflow-y:auto;">
       <div style="height:55%; min-height:280px; flex:0 0 auto; position:relative; overflow:hidden;">
         <img src="assets/hero-veronica.jpg" alt="Mentora Consciente" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 43%;">
-        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(99,63,123,0.50) 0%, rgba(235,158,197,0.18) 42%, rgba(173,236,230,0.05) 65%);"></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(117,75,133,0.34) 0%, rgba(246,174,207,0.16) 42%, rgba(191,237,240,0.05) 65%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:0 26px 22px;">
-          <p class="font-display italic text-[19px] leading-snug" style="color:#F4F1FB;">Historia real.<br/>Herramientas reales.</p>
+          <p class="font-display italic text-[19px] leading-snug" style="color:#FFFDFE;">Historia real.<br/>Herramientas reales.</p>
         </div>
       </div>
-      <div class="px-8 pt-6 pb-9 flex-1 flex flex-col justify-end items-center" style="background:linear-gradient(180deg, rgba(255,242,250,0.48) 0%, rgba(205,171,228,0.65) 35%, rgba(109,190,194,0.76) 100%), url('assets/no-estas-sola.webp') 70% 30%/cover no-repeat;">
+      <div class="px-8 pt-6 pb-9 flex-1 flex flex-col justify-end items-center" style="background:linear-gradient(180deg, rgba(255,240,248,0.35) 0%, rgba(218,193,234,0.43) 35%, rgba(160,220,229,0.53) 100%), url('assets/no-estas-sola.webp') 70% 30%/cover no-repeat;">
         <div class="flex flex-col items-center gap-5 mb-8">
           <h1 class="font-display font-semibold text-[32px] leading-[1.1] tracking-[0.02em] uppercase text-center" style="color:var(--ink)">Descargá<br/>mi app</h1>
           <div class="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style="background:var(--surface); box-shadow:0 0 34px -4px rgba(196,140,255,0.6);">
@@ -146,7 +146,7 @@
 
         <div id="landingActionBox">
           <button id="landingInstallBtn" onclick="landingInstall()" class="btn-primary rowbtn w-full py-4 rounded-2xl text-[15px] font-medium flex items-center justify-center gap-2">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F4F1FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#FFFDFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Mentora Consciente
           </button>
           <p class="text-[11px] text-center mt-3.5 tracking-wide" style="color:var(--ink-soft)">Gratis · un toque · sin tiendas de apps</p>
@@ -154,7 +154,7 @@
 
         <div id="landingSuccessBox" class="hidden text-center">
           <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto" style="background:var(--sage-pale)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A06DC0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
           <p class="text-[15px] font-medium mt-3">¡Listo! Ya se está instalando.</p>
           <p class="text-[13px] mt-1.5 leading-relaxed" style="color:var(--ink-soft)">Buscá el ícono de Mentora Consciente en tu pantalla de inicio y abrilo desde ahí.</p>
@@ -171,8 +171,8 @@
     <div class="statusbar">
       <span id="clock">9:41</span>
       <span class="flex items-center gap-1">
-        <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="0.5" fill="#F4F1FB"/><rect x="4.3" y="4" width="3" height="7" rx="0.5" fill="#F4F1FB"/><rect x="8.6" y="2" width="3" height="9" rx="0.5" fill="#F4F1FB"/><rect x="12.9" y="0" width="3" height="11" rx="0.5" fill="#F4F1FB"/></svg>
-        <svg width="18" height="11" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="2.5" stroke="#F4F1FB"/><rect x="2" y="2" width="17" height="8" rx="1.3" fill="#F4F1FB"/><rect x="21.5" y="4" width="1.6" height="4" rx="0.8" fill="#F4F1FB"/></svg>
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="0.5" fill="#FFFDFE"/><rect x="4.3" y="4" width="3" height="7" rx="0.5" fill="#FFFDFE"/><rect x="8.6" y="2" width="3" height="9" rx="0.5" fill="#FFFDFE"/><rect x="12.9" y="0" width="3" height="11" rx="0.5" fill="#FFFDFE"/></svg>
+        <svg width="18" height="11" viewBox="0 0 24 12" fill="none"><rect x="0.5" y="0.5" width="20" height="11" rx="2.5" stroke="#FFFDFE"/><rect x="2" y="2" width="17" height="8" rx="1.3" fill="#FFFDFE"/><rect x="21.5" y="4" width="1.6" height="4" rx="0.8" fill="#FFFDFE"/></svg>
       </span>
     </div>
 
@@ -191,7 +191,7 @@
       <section class="tabpanel active" id="tab-inicio">
         <div id="installBanner" class="hidden card p-4 mt-1 mb-4 flex items-center gap-3" style="background:var(--gold-pale); border-color:var(--gold-pale);">
           <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--surface)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C492D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
           </div>
           <div class="flex-1">
             <p class="text-[13.5px] font-medium">Instalá la app en tu celular</p>
@@ -203,7 +203,7 @@
         <div id="iosInstallBanner" class="hidden card p-4 mt-1 mb-4" style="background:var(--gold-pale); border-color:var(--gold-pale);">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--surface)">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C492D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg>
             </div>
             <p class="text-[13.5px] font-medium flex-1">Instalá la app en tu iPhone</p>
           </div>
@@ -227,27 +227,27 @@
 
         <button onclick="goTab('noestassola')" class="w-full text-left rowbtn card mt-5 relative overflow-hidden" style="aspect-ratio:5/4;">
           <img src="assets/no-estas-sola.webp" alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
-          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,13,24,0.92) 0%, rgba(10,13,24,0.45) 45%, rgba(10,13,24,0.05) 75%);"></div>
+          <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(91,57,105,0.48) 0%, rgba(155,100,148,0.22) 45%, rgba(252,213,231,0.03) 75%);"></div>
           <div style="position:absolute; left:24px; right:24px; bottom:22px;">
-            <p class="eyebrow" style="color:#D9C4F5">Espacio de acompañamiento</p>
-            <h3 class="font-display text-[21px] mt-2" style="color:#F4F1FB">No estás sola</h3>
-            <p class="text-[14px] mt-2 leading-relaxed" style="color:#EDE6FA">Audios para escuchar cuando sientas que necesitás compañía, a cualquier hora.</p>
-            <span class="inline-flex items-center gap-2 mt-4 text-[13px] font-medium" style="color:#F4F1FB">
+            <p class="eyebrow" style="color:#F7D4E5">Espacio de acompañamiento</p>
+            <h3 class="font-display text-[21px] mt-2" style="color:#FFFDFE">No estás sola</h3>
+            <p class="text-[14px] mt-2 leading-relaxed" style="color:#FFF5F9">Audios para escuchar cuando sientas que necesitás compañía, a cualquier hora.</p>
+            <span class="inline-flex items-center gap-2 mt-4 text-[13px] font-medium" style="color:#FFFDFE">
               Escuchar audios
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F4F1FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFDFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </span>
           </div>
         </button>
 
         <a href="__CAMPUS_URL__" target="_blank" rel="noopener" class="rowbtn card mt-4 p-5 flex items-center gap-3">
           <div class="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C492D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
           </div>
           <div class="flex-1">
             <p class="text-[14px] font-medium">Todos mis cursos y mi comunidad</p>
             <p class="text-[12px]" style="color:var(--ink-soft)">Abrir la web de Mentora</p>
           </div>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B99AB8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
         </a>
 
         <div class="h-2"></div>
@@ -262,10 +262,10 @@
 
         <div class="card mt-6 p-7 flex flex-col items-center text-center">
           <div class="relative w-[168px] h-[168px] flex items-center justify-center">
-            <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#2FF0D4" stroke-width="1" opacity="0.35"/></svg>
-            <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#2FF0D4" stroke-width="1.1" opacity="0.6"/></svg>
+            <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#A6E7EA" stroke-width="1" opacity="0.35"/></svg>
+            <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#A6E7EA" stroke-width="1.1" opacity="0.6"/></svg>
             <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="background:var(--sage-pale); box-shadow:0 0 30px -2px rgba(47,240,212,0.5)">
-              <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" fill="none" stroke="#0BA89A" stroke-width="1"/><circle cx="13" cy="13" r="7.5" fill="none" stroke="#0BA89A" stroke-width="1"/><circle cx="13" cy="13" r="3" fill="#0BA89A"/></svg>
+              <svg width="26" height="26" viewBox="0 0 26 26"><circle cx="13" cy="13" r="12" fill="none" stroke="#A06DC0" stroke-width="1"/><circle cx="13" cy="13" r="7.5" fill="none" stroke="#A06DC0" stroke-width="1"/><circle cx="13" cy="13" r="3" fill="#A06DC0"/></svg>
             </div>
           </div>
 
@@ -285,8 +285,8 @@
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
             <button id="lib-playBtn" onclick="togglePlayer('lib')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
-              <svg id="lib-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
-              <svg id="lib-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+              <svg id="lib-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#FFFDFE"><polygon points="6,4 20,12 6,20"/></svg>
+              <svg id="lib-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#FFFDFE"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
             <button onclick="skipPlayer('lib',15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Adelantar 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 21,12 12,19" fill="currentColor"/><polygon points="3,5 12,12 3,19" fill="currentColor"/></svg>
@@ -325,10 +325,10 @@
 
         <div class="card mt-4 p-7 flex flex-col items-center text-center">
           <div class="relative w-[168px] h-[168px] flex items-center justify-center">
-            <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#2FF0D4" stroke-width="1" opacity="0.35"/></svg>
-            <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#2FF0D4" stroke-width="1.1" opacity="0.6"/></svg>
+            <svg class="breathe-slow absolute" width="168" height="168" viewBox="0 0 168 168"><circle cx="84" cy="84" r="83" fill="none" stroke="#A6E7EA" stroke-width="1" opacity="0.35"/></svg>
+            <svg class="breathe absolute" width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="65" fill="none" stroke="#A6E7EA" stroke-width="1.1" opacity="0.6"/></svg>
             <div class="w-[74px] h-[74px] rounded-full flex items-center justify-center" style="background:var(--sage-pale)">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M12 8.6c-1.7-1.7-1.7-4.2 0-5.9 1.7 1.7 1.7 4.2 0 5.9zM12 15.4c-1.7 1.7-1.7 4.2 0 5.9 1.7-1.7 1.7-4.2 0-5.9zM8.6 12c-1.7-1.7-4.2-1.7-5.9 0 1.7 1.7 4.2 1.7 5.9 0zM15.4 12c1.7-1.7 4.2-1.7 5.9 0-1.7 1.7-4.2 1.7-5.9 0z"/></svg>
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#A06DC0" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M12 8.6c-1.7-1.7-1.7-4.2 0-5.9 1.7 1.7 1.7 4.2 0 5.9zM12 15.4c-1.7 1.7-1.7 4.2 0 5.9 1.7-1.7 1.7-4.2 0-5.9zM8.6 12c-1.7-1.7-4.2-1.7-5.9 0 1.7 1.7 4.2 1.7 5.9 0zM15.4 12c1.7-1.7 4.2-1.7 5.9 0-1.7 1.7-4.2 1.7-5.9 0z"/></svg>
             </div>
           </div>
 
@@ -348,8 +348,8 @@
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
             <button id="med-playBtn" onclick="togglePlayer('med')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
-              <svg id="med-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
-              <svg id="med-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+              <svg id="med-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#FFFDFE"><polygon points="6,4 20,12 6,20"/></svg>
+              <svg id="med-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#FFFDFE"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
             <button onclick="skipPlayer('med',15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Adelantar 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 21,12 12,19" fill="currentColor"/><polygon points="3,5 12,12 3,19" fill="currentColor"/></svg>
@@ -390,8 +390,8 @@
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E9DCFB" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
           </div>
           <div style="position:absolute; left:20px; right:20px; bottom:16px;">
-            <p class="eyebrow" style="color:#D9C4F5">Estás escuchando</p>
-            <h3 class="font-display text-[20px] mt-1" id="nes-trackTitle" style="color:#F4F1FB">—</h3>
+            <p class="eyebrow" style="color:#F7D4E5">Estás escuchando</p>
+            <h3 class="font-display text-[20px] mt-1" id="nes-trackTitle" style="color:#FFFDFE">—</h3>
           </div>
         </div>
 
@@ -410,15 +410,15 @@
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 3,12 12,19" fill="currentColor"/><polygon points="21,5 12,12 21,19" fill="currentColor"/></svg>
             </button>
             <button id="nes-playBtn" onclick="togglePlayer('nes')" class="w-16 h-16 rounded-full flex items-center justify-center" style="background:var(--sage-deep); box-shadow:0 0 28px -3px rgba(47,240,212,0.65)">
-              <svg id="nes-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#F4F1FB"><polygon points="6,4 20,12 6,20"/></svg>
-              <svg id="nes-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#F4F1FB"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
+              <svg id="nes-iconPlay" width="20" height="20" viewBox="0 0 24 24" fill="#FFFDFE"><polygon points="6,4 20,12 6,20"/></svg>
+              <svg id="nes-iconPause" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="#FFFDFE"><rect x="5" y="4" width="5" height="16" rx="1"/><rect x="14" y="4" width="5" height="16" rx="1"/></svg>
             </button>
             <button onclick="skipPlayer('nes',15)" class="w-9 h-9 flex items-center justify-center" style="color:var(--ink-soft)" aria-label="Adelantar 15 segundos">
               <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><polygon points="12,5 21,12 12,19" fill="currentColor"/><polygon points="3,5 12,12 3,19" fill="currentColor"/></svg>
             </button>
           </div>
         </div>
-        <audio id="nes-audio" preload="none"><source id="nes-source" src="" type="audio/mpeg"></audio>
+        <audio id="nes-audio" preload="auto"><source id="nes-source" src="" type="audio/mpeg"></audio>
 
         <div class="flex items-center justify-between mt-8 mb-3">
           <p class="eyebrow">Audios disponibles</p>
@@ -512,24 +512,24 @@
         <p class="eyebrow mt-7 mb-3">Seguí conectada</p>
         <div class="space-y-2.5">
           <a href="assets/ebook-desprogramate.pdf" download target="_blank" rel="noopener" class="rowbtn card p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C48CFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C492D8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="M6 11l6 6 6-6"/><path d="M5 21h14"/></svg></div>
             <div class="flex-1"><p class="text-[14px] font-medium">Ebook: Desprogramate</p><p class="text-[12px]" style="color:var(--ink-soft)">Descarga gratuita</p></div>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B99AB8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </a>
           <a href="https://www.instagram.com/mentoraconsciente" target="_blank" rel="noopener" class="rowbtn card p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="#0BA89A" stroke="none"/></svg></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A06DC0" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.9" fill="#A06DC0" stroke="none"/></svg></div>
             <div class="flex-1"><p class="text-[14px] font-medium">Instagram</p><p class="text-[12px]" style="color:var(--ink-soft)">@mentoraconsciente</p></div>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B99AB8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </a>
           <a href="mailto:mentoramentee@gmail.com" class="rowbtn card p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A06DC0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
             <div class="flex-1"><p class="text-[14px] font-medium">Correo</p><p class="text-[12px]" style="color:var(--ink-soft)">mentoramentee@gmail.com</p></div>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B99AB8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </a>
           <a href="__CAMPUS_URL__" target="_blank" rel="noopener" class="rowbtn card p-4 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--sage-pale)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A06DC0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
             <div class="flex-1"><p class="text-[14px] font-medium">Mi página web</p><p class="text-[12px]" style="color:var(--ink-soft)">Cursos y comunidad completa</p></div>
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#C3B7E0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B99AB8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
           </a>
         </div>
 
@@ -675,7 +675,7 @@
       box.innerHTML = `
         <a href="${escAttr(url)}" target="_blank" rel="noopener" class="rowbtn card relative overflow-hidden flex items-center justify-center h-44" style="background:var(--sage-deep); border-color:var(--sage-deep);">
           <div class="w-14 h-14 rounded-full flex items-center justify-center" style="background:rgba(247,245,239,0.92)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0BA89A"><polygon points="6,4 20,12 6,20"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#A06DC0"><polygon points="6,4 20,12 6,20"/></svg>
           </div>
         </a>`;
     }
@@ -709,7 +709,7 @@
       row.style.background = 'var(--surface-soft)';
       row.innerHTML = `
         <p class="text-[13px] flex-1 leading-snug">${escHtml(p.text)}</p>
-        <button onclick="deleteDailyPhrase('${p.id}')" aria-label="Eliminar" style="color:#C3B7E0" class="flex-shrink-0">
+        <button onclick="deleteDailyPhrase('${p.id}')" aria-label="Eliminar" style="color:#B99AB8" class="flex-shrink-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
         </button>`;
       box.appendChild(row);
@@ -815,13 +815,13 @@
       row.className = 'card p-4 flex items-center gap-3 rowbtn' + (a.id === selectedAudioId ? '' : ' cursor-pointer');
       row.innerHTML = `
         <button onclick="selectAudio('${a.id}')" class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:${a.id===selectedAudioId?'var(--sage-pale)':'var(--surface-soft)'}">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${a.id===selectedAudioId?'#0BA89A':'#C3B7E0'}" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${a.id===selectedAudioId?'#A06DC0':'#B99AB8'}" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
         </button>
         <button onclick="selectAudio('${a.id}')" class="flex-1 text-left">
           <p class="text-[14px] font-medium">${escHtml(a.title)}</p>
           <p class="text-[12px]" style="color:var(--ink-soft)">${a.id===selectedAudioId ? 'Reproduciendo' : 'Tocar para escuchar'}</p>
         </button>
-        ${isAdmin && a.id !== 'default' ? `<button onclick="deleteLibraryAudio('${a.id}')" aria-label="Eliminar" style="color:#C3B7E0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>` : ''}
+        ${isAdmin && a.id !== 'default' ? `<button onclick="deleteLibraryAudio('${a.id}')" aria-label="Eliminar" style="color:#B99AB8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>` : ''}
       `;
       list.appendChild(row);
     });
@@ -879,6 +879,20 @@
   function makeAudioLibrary(prefix, collectionName, seedList){
     let items = seedList.slice();
     let selectedId = items.length ? items[0].id : null;
+    let segmentIndex = 0;
+
+    function loadCurrentSource(force=false){
+      const current = items.find(x => x.id === selectedId);
+      const audio = document.getElementById(prefix + '-audio');
+      const source = document.getElementById(prefix + '-source');
+      if (!current || !audio || !source) return;
+      const filename = current.segments ? current.segments[segmentIndex] : current.filename;
+      if (!filename || (!force && audio.dataset.filename === filename)) return;
+      source.src = 'audios/' + filename;
+      source.type = 'audio/mpeg';
+      audio.dataset.filename = filename;
+      audio.load();
+    }
 
     function render(){
       const list = document.getElementById(prefix + '-list');
@@ -889,13 +903,13 @@
         row.className = 'card p-4 flex items-center gap-3 rowbtn' + (a.id === selectedId ? '' : ' cursor-pointer');
         row.innerHTML = `
           <button onclick="${prefix}Select('${a.id}')" class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:${a.id===selectedId?'var(--sage-pale)':'var(--surface-soft)'}">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${a.id===selectedId?'#0BA89A':'#C3B7E0'}" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="${a.id===selectedId?'#A06DC0':'#B99AB8'}" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
           </button>
           <button onclick="${prefix}Select('${a.id}')" class="flex-1 text-left">
             <p class="text-[14px] font-medium">${escHtml(a.title)}</p>
             <p class="text-[12px]" style="color:var(--ink-soft)">${a.id===selectedId ? 'Reproduciendo' : 'Tocar para escuchar'}</p>
           </button>
-          ${isAdmin && !a.seeded ? `<button onclick="${prefix}Delete('${a.id}')" aria-label="Eliminar" style="color:#C3B7E0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>` : ''}
+          ${isAdmin && !a.seeded ? `<button onclick="${prefix}Delete('${a.id}')" aria-label="Eliminar" style="color:#B99AB8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>` : ''}
         `;
         list.appendChild(row);
       });
@@ -906,17 +920,18 @@
         const current = items.find(x => x.id === selectedId);
         titleEl.textContent = current ? current.title : 'Elegí un audio';
       }
+      loadCurrentSource();
     }
 
     function select(id){
       const a = items.find(x => x.id === id);
       if (!a) return;
       selectedId = id;
+      segmentIndex = 0;
       const audio = document.getElementById(prefix + '-audio');
       const wasPlaying = audio && !audio.paused;
-      document.getElementById(prefix + '-source').src = 'audios/' + a.filename;
-      audio.load();
-      if (wasPlaying) audio.play();
+      loadCurrentSource(true);
+      if (wasPlaying) audio.play().catch(() => {});
       render();
     }
 
@@ -955,6 +970,15 @@
 
     render();
     wirePlayer(prefix);
+    const player = document.getElementById(prefix + '-audio');
+    player.addEventListener('ended', () => {
+      const current = items.find(x => x.id === selectedId);
+      if (current && current.segments && segmentIndex < current.segments.length - 1){
+        segmentIndex += 1;
+        loadCurrentSource(true);
+        player.play().catch(() => {});
+      }
+    });
   }
 
   makeAudioLibrary('med', 'meditation_audios', [
@@ -964,9 +988,9 @@
   ]);
 
   makeAudioLibrary('nes', 'no_estas_sola_audios', [
-    { id: 'miedo-al-cambio', title: 'Miedo al cambio', filename: 'miedo-al-cambio.ogg', seeded: true },
-    { id: 'sola', title: 'Sola', filename: 'sola.ogg', seeded: true },
-    { id: 'fuerte-todo-el-tiempo', title: 'Fuerte todo el tiempo', filename: 'fuerte-todo-el-tiempo.ogg', seeded: true }
+    { id: 'miedo-al-cambio', title: 'Miedo al cambio', segments: ['miedo-al-cambio-01.mp3','miedo-al-cambio-02.mp3','miedo-al-cambio-03.mp3'], seeded: true },
+    { id: 'sola', title: 'Sola', segments: ['sola-01.mp3','sola-02.mp3'], seeded: true },
+    { id: 'fuerte-todo-el-tiempo', title: 'Fuerte todo el tiempo', filename: 'fuerte-todo-el-tiempo.mp3', seeded: true }
   ]);
 
   /* ===================== diario ===================== */
@@ -989,7 +1013,7 @@
       card.innerHTML = `
         <div class="flex items-center justify-between">
           <p class="text-[11px] font-medium" style="color:var(--sage-deep)">${escHtml(entry.date)}</p>
-          <button aria-label="Eliminar" onclick="deleteDiaryEntry(${realIndex})" style="color:#C3B7E0">
+          <button aria-label="Eliminar" onclick="deleteDiaryEntry(${realIndex})" style="color:#B99AB8">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
         </div>
