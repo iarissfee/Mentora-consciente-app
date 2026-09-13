@@ -976,7 +976,10 @@
       if (current && current.segments && segmentIndex < current.segments.length - 1){
         segmentIndex += 1;
         loadCurrentSource(true);
-        player.play().catch(() => {});
+        player.play().then(() => {
+          document.getElementById(prefix + '-iconPlay').classList.add('hidden');
+          document.getElementById(prefix + '-iconPause').classList.remove('hidden');
+        }).catch(() => {});
       }
     });
   }
