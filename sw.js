@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-app-lemuria-hq-v5';
+const CACHE_NAME = 'mentora-app-lemuria-video-v6';
 const APP_SHELL = [
   './',
   './index.html',
