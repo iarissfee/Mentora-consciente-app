@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v1';
+const CACHE_NAME = 'mentora-consciente-v2';
 const APP_SHELL = [
   './',
   './index.html',
