@@ -6,7 +6,7 @@
 <title>Mentora Consciente</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0BA89A">
+<meta name="theme-color" content="#88DCD8">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -22,21 +22,21 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 <style>
   :root{
-    --bg:#131A2E;
-    --surface:#1C2740;
-    --surface-soft:#25324F;
-    --ink:#F4F1FB;
-    --ink-soft:#C3B7E0;
-    --sage:#2FF0D4;
-    --sage-deep:#0BA89A;
-    --sage-pale:#163B3A;
-    --gold:#C48CFF;
-    --gold-pale:#362951;
-    --line:#2C3856;
+    --bg:#F9F6FC;
+    --surface:#FFFFFF;
+    --surface-soft:#F0E8F7;
+    --ink:#443154;
+    --ink-soft:#87758F;
+    --sage:#62DCD5;
+    --sage-deep:#9163BA;
+    --sage-pale:#DCF7F4;
+    --gold:#EE9CC4;
+    --gold-pale:#F9E7F1;
+    --line:#E5D7EA;
   }
   *{ box-sizing:border-box; }
   html,body{ height:100%; }
-  body{ background:#0A0E1A; font-family:'Work Sans', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
+  body{ background:linear-gradient(145deg,#E9E0FA 0%,#FCE7F0 48%,#D8F4F2 100%); font-family:'Work Sans', sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; }
   .font-display{ font-family:'Fraunces', serif; }
   .font-editorial{ font-family:'Bodoni Moda', serif; }
 
@@ -44,14 +44,14 @@
   .phone{
     position:relative; width:390px; max-width:94vw; height:844px; max-height:92vh;
     background:
-      linear-gradient(180deg, rgba(9,14,26,0.38) 0%, rgba(10,16,29,0.52) 45%, rgba(8,12,23,0.72) 100%),
+      linear-gradient(180deg, rgba(251,238,249,0.15) 0%, rgba(173,132,206,0.22) 45%, rgba(70,117,152,0.42) 100%),
       url('assets/realm-mobile.webp') 32% 58%/cover no-repeat;
     background-color:var(--bg);
-    border-radius:52px; border:10px solid #14161F;
-    box-shadow:0 30px 60px -20px rgba(5,8,18,0.5), 0 4px 14px rgba(5,8,18,0.16);
+    border-radius:52px; border:10px solid #FFF8FE;
+    box-shadow:0 30px 60px -20px rgba(126,82,147,0.30), 0 4px 14px rgba(92,189,186,0.20);
     overflow:hidden; display:flex; flex-direction:column;
   }
-  .notch{ position:absolute; top:10px; left:50%; transform:translateX(-50%); width:120px; height:26px; background:#14161F; border-radius:0 0 18px 18px; z-index:40; }
+  .notch{ position:absolute; top:10px; left:50%; transform:translateX(-50%); width:120px; height:26px; background:#FFF8FE; border-radius:0 0 18px 18px; z-index:40; }
   .statusbar{ height:46px; flex:0 0 auto; display:flex; align-items:flex-end; justify-content:space-between; padding:0 26px 6px 26px; font-size:13px; font-weight:600; color:var(--ink); }
   .screen{ flex:1 1 auto; overflow-y:auto; overflow-x:hidden; padding-bottom:108px; scrollbar-width:none; }
   .screen::-webkit-scrollbar{ display:none; }
@@ -72,18 +72,18 @@
 
   .eyebrow{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); font-weight:500; }
   .card{
-    background:rgba(24,36,58,0.5); border:1px solid rgba(255,255,255,0.12); border-radius:22px;
+    background:rgba(255,255,255,0.76); border:1px solid rgba(255,255,255,0.80); border-radius:22px;
     backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
   }
-  .btn-primary{ background:var(--sage-deep); color:#F4F1FB; box-shadow:0 0 22px -4px rgba(47,240,212,0.55); }
+  .btn-primary{ background:linear-gradient(135deg,#9B6FC2,#D782B2); color:#FFFDFE; box-shadow:0 10px 24px -10px rgba(183,101,172,0.70); }
   .btn-primary:active{ transform:scale(.98); }
   .btn-primary:disabled{ opacity:.55; }
   .btn-ghost{ background:var(--surface-soft); color:var(--ink); }
 
   .bottomnav{
     position:absolute; left:0; right:0; bottom:0; padding:9px 4px calc(16px + env(safe-area-inset-bottom,0px));
-    background:rgba(14,19,34,0.82); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-    border-top:1px solid rgba(255,255,255,0.08); z-index:30;
+    background:rgba(255,250,254,0.88); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    border-top:1px solid rgba(160,113,189,0.16); z-index:30;
   }
   .navbtn{ display:flex; flex-direction:column; align-items:center; gap:4px; color:var(--ink-soft); transition:color .2s ease; flex:1; min-width:0; }
   .navbtn.active{ color:var(--sage-deep); }
@@ -103,7 +103,7 @@
   @keyframes fadeUp{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:translateY(0);} }
 
   input[type="range"]{ -webkit-appearance:none; appearance:none; height:3px; border-radius:999px; background:var(--surface-soft); }
-  input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:13px; height:13px; border-radius:999px; background:var(--sage-deep); box-shadow:0 0 0 4px rgba(78,90,72,0.14); cursor:pointer; }
+  input[type="range"]::-webkit-slider-thumb{ -webkit-appearance:none; appearance:none; width:13px; height:13px; border-radius:999px; background:var(--sage-deep); box-shadow:0 0 0 4px rgba(214,132,180,0.17); cursor:pointer; }
 
   .rowbtn{ transition:background .2s ease, transform .15s ease; }
   .rowbtn:active{ transform:scale(.985); }
@@ -131,12 +131,12 @@
     <div id="landingScreen" class="hidden landing-inner" style="position:absolute; inset:0; z-index:100; overflow-y:auto;">
       <div style="height:55%; min-height:280px; flex:0 0 auto; position:relative; overflow:hidden;">
         <img src="assets/hero-veronica.jpg" alt="Mentora Consciente" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 43%;">
-        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,13,24,0.78) 0%, rgba(10,13,24,0.3) 40%, rgba(10,13,24,0) 65%);"></div>
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(99,63,123,0.50) 0%, rgba(235,158,197,0.18) 42%, rgba(173,236,230,0.05) 65%);"></div>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:0 26px 22px;">
           <p class="font-display italic text-[19px] leading-snug" style="color:#F4F1FB;">Historia real.<br/>Herramientas reales.</p>
         </div>
       </div>
-      <div class="px-8 pt-6 pb-9 flex-1 flex flex-col justify-end items-center" style="background:linear-gradient(180deg, rgba(9,14,26,0.45) 0%, rgba(9,14,26,0.68) 30%, rgba(8,12,23,0.85) 100%), url('assets/no-estas-sola.webp') 70% 30%/cover no-repeat;">
+      <div class="px-8 pt-6 pb-9 flex-1 flex flex-col justify-end items-center" style="background:linear-gradient(180deg, rgba(255,242,250,0.48) 0%, rgba(205,171,228,0.65) 35%, rgba(109,190,194,0.76) 100%), url('assets/no-estas-sola.webp') 70% 30%/cover no-repeat;">
         <div class="flex flex-col items-center gap-5 mb-8">
           <h1 class="font-display font-semibold text-[32px] leading-[1.1] tracking-[0.02em] uppercase text-center" style="color:var(--ink)">Descargá<br/>mi app</h1>
           <div class="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style="background:var(--surface); box-shadow:0 0 34px -4px rgba(196,140,255,0.6);">
@@ -145,7 +145,7 @@
         </div>
 
         <div id="landingActionBox">
-          <button id="landingInstallBtn" onclick="landingInstall()" class="btn-primary rowbtn w-full py-4 rounded-2xl text-[15px] font-medium flex items-center justify-center gap-2" style="background:#0E6F65;">
+          <button id="landingInstallBtn" onclick="landingInstall()" class="btn-primary rowbtn w-full py-4 rounded-2xl text-[15px] font-medium flex items-center justify-center gap-2">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F4F1FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Mentora Consciente
           </button>
@@ -270,7 +270,7 @@
           </div>
 
           <p class="eyebrow mt-6" style="color:var(--sage-deep)">Estás escuchando</p>
-          <h3 class="font-display text-[20px] mt-1" id="lib-trackTitle">Empezar sin excusas</h3>
+          <h3 class="font-display text-[20px] mt-1" id="lib-trackTitle">—</h3>
           <p class="text-[13px] mt-1" style="color:var(--ink-soft)">Mentora Consciente</p>
 
           <div class="w-full mt-6">
