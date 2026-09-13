@@ -26,7 +26,7 @@
     --surface:#FFFCFD;
     --surface-soft:#F8ECF4;
     --ink:#5B435E;
-    --ink-soft:#947D97;
+    --ink-soft:#715078;
     --sage:#A6E7EA;
     --sage-deep:#A06DC0;
     --sage-pale:#E4F8F9;
@@ -45,7 +45,7 @@
     position:relative; width:390px; max-width:94vw; height:844px; max-height:92vh;
     background:
       linear-gradient(180deg, rgba(255,226,240,0.12) 0%, rgba(206,234,243,0.17) 45%, rgba(185,143,204,0.23) 100%),
-      url('assets/realm-mobile.webp') 32% 58%/cover no-repeat;
+      url('assets/realm-mobile.webp') 50% 54%/cover no-repeat;
     background-color:var(--bg);
     border-radius:52px; border:10px solid #FFF8FE;
     box-shadow:0 30px 60px -20px rgba(126,82,147,0.30), 0 4px 14px rgba(92,189,186,0.20);
@@ -293,7 +293,7 @@
             </button>
           </div>
         </div>
-        <audio id="lib-audio" preload="none"><source id="lib-source" src="audios/empezar-sin-excusas.mp3" type="audio/mpeg"></audio>
+        <audio id="lib-audio" preload="none"><source id="lib-source" src="" type="audio/mpeg"></audio>
 
         <div class="flex items-center justify-between mt-8 mb-3">
           <p class="eyebrow">Tu biblioteca</p>
@@ -418,7 +418,7 @@
             </button>
           </div>
         </div>
-        <audio id="nes-audio" preload="auto"><source id="nes-source" src="" type="audio/mpeg"></audio>
+        <audio id="nes-audio" preload="metadata"><source id="nes-source" src="" type="audio/mpeg"></audio>
 
         <div class="flex items-center justify-between mt-8 mb-3">
           <p class="eyebrow">Audios disponibles</p>
@@ -560,17 +560,14 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
           <span class="navlabel">Inicio</span><span class="navdot"></span>
         </button>
-        <button class="navbtn" id="nav-noestassola" onclick="goTab('noestassola')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><rect x="3" y="15" width="4" height="6" rx="1.3"/><rect x="17" y="15" width="4" height="6" rx="1.3"/></svg>
-          <span class="navlabel">No estás sola</span><span class="navdot"></span>
-        </button>
+
         <button class="navbtn" id="nav-meditaciones" onclick="goTab('meditaciones')">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.6"/><path d="M12 8.6c-1.7-1.7-1.7-4.2 0-5.9 1.7 1.7 1.7 4.2 0 5.9zM12 15.4c-1.7 1.7-1.7 4.2 0 5.9 1.7-1.7 1.7-4.2 0-5.9zM8.6 12c-1.7-1.7-4.2-1.7-5.9 0 1.7 1.7 4.2 1.7 5.9 0zM15.4 12c1.7-1.7 4.2-1.7 5.9 0-1.7 1.7-4.2 1.7-5.9 0z"/></svg>
           <span class="navlabel">Meditaciones</span><span class="navdot"></span>
         </button>
         <button class="navbtn" id="nav-noestassola" onclick="goTab('noestassola')">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>
-          <span class="navlabel">Compañía</span><span class="navdot"></span>
+          <span class="navlabel">No estás sola</span><span class="navdot"></span>
         </button>
         <button class="navbtn" id="nav-diario" onclick="goTab('diario')">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
@@ -786,6 +783,21 @@
     audio.addEventListener('loadedmetadata', () => { durTime.textContent = fmt(audio.duration); seek.max = Math.floor(audio.duration); });
     audio.addEventListener('timeupdate', () => { curTime.textContent = fmt(audio.currentTime); seek.value = Math.floor(audio.currentTime); });
     audio.addEventListener('ended', () => { iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden'); });
+    const status = document.createElement('p');
+    status.setAttribute('role','status');
+    status.style.cssText='font-size:12px;min-height:18px;margin-top:12px;color:var(--ink-soft)';
+    document.getElementById(prefix+'-playBtn').parentElement.after(status);
+    const sync = () => {
+      iconPlay.classList.toggle('hidden', !audio.paused);
+      iconPause.classList.toggle('hidden', audio.paused);
+    };
+    audio.addEventListener('play', sync);
+    audio.addEventListener('pause', () => { sync(); status.textContent = 'En pausa'; });
+    audio.addEventListener('waiting', () => { status.textContent = 'Cargando audio…'; });
+    audio.addEventListener('playing', () => { sync(); status.textContent = 'Reproduciendo'; });
+    audio.addEventListener('error', () => { sync(); status.textContent = 'No se pudo cargar. Revisá tu conexión y volvé a tocar reproducir.'; });
+    audio.addEventListener('ended', () => { status.textContent = 'Audio finalizado'; });
+    audio.addEventListener('playbackfailure', () => { status.textContent = 'No se pudo iniciar. Tocá reproducir para reintentar.'; });
     seek.addEventListener('input', () => { audio.currentTime = seek.value; });
   }
   function togglePlayer(prefix){
@@ -793,8 +805,14 @@
     const iconPlay = document.getElementById(prefix+'-iconPlay');
     const iconPause = document.getElementById(prefix+'-iconPause');
     document.querySelectorAll('audio').forEach(a => { if (a !== audio) a.pause(); });
-    if (audio.paused){ audio.play(); iconPlay.classList.add('hidden'); iconPause.classList.remove('hidden'); }
+    if (audio.paused){ playNow(audio, prefix); }
     else { audio.pause(); iconPlay.classList.remove('hidden'); iconPause.classList.add('hidden'); }
+  }
+  function playNow(audio, prefix){
+    document.querySelectorAll('audio').forEach(a => { if(a !== audio) a.pause(); });
+    audio.play().catch(err => {
+      if (err.name !== 'AbortError') audio.dispatchEvent(new Event('playbackfailure'));
+    });
   }
   function skipPlayer(prefix, sec){
     const audio = document.getElementById(prefix+'-audio');
@@ -907,7 +925,7 @@
           </button>
           <button onclick="${prefix}Select('${a.id}')" class="flex-1 text-left">
             <p class="text-[14px] font-medium">${escHtml(a.title)}</p>
-            <p class="text-[12px]" style="color:var(--ink-soft)">${a.id===selectedId ? 'Reproduciendo' : 'Tocar para escuchar'}</p>
+            <p class="text-[12px]" style="color:var(--ink-soft)">${a.id===selectedId ? 'Seleccionado · tocar para escuchar' : 'Tocar para escuchar'}</p>
           </button>
           ${isAdmin && !a.seeded ? `<button onclick="${prefix}Delete('${a.id}')" aria-label="Eliminar" style="color:#B99AB8"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>` : ''}
         `;
@@ -931,7 +949,7 @@
       const audio = document.getElementById(prefix + '-audio');
       const wasPlaying = audio && !audio.paused;
       loadCurrentSource(true);
-      if (wasPlaying) audio.play().catch(() => {});
+      playNow(audio, prefix);
       render();
     }
 
@@ -991,8 +1009,8 @@
   ]);
 
   makeAudioLibrary('nes', 'no_estas_sola_audios', [
-    { id: 'miedo-al-cambio', title: 'Miedo al cambio', segments: ['miedo-al-cambio-01.mp3','miedo-al-cambio-02.mp3','miedo-al-cambio-03.mp3'], seeded: true },
-    { id: 'sola', title: 'Sola', segments: ['sola-01.mp3','sola-02.mp3'], seeded: true },
+    { id: 'miedo-al-cambio', title: 'Miedo al cambio', filename: 'miedo-al-cambio.mp3', seeded: true },
+    { id: 'sola', title: 'Sola', filename: 'sola.mp3', seeded: true },
     { id: 'fuerte-todo-el-tiempo', title: 'Fuerte todo el tiempo', filename: 'fuerte-todo-el-tiempo.mp3', seeded: true }
   ]);
 
