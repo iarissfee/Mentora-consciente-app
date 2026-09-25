@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v6-menu-privacy';
+﻿const CACHE_NAME = 'mentora-consciente-v6-menu-privacy';
 const APP_SHELL = [
   './',
   './index.html',
@@ -32,8 +32,8 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  // No interceptamos audio, PDFs ni pedidos a otros orígenes (Firebase, YouTube, fuentes, etc.):
-  // son pesados o dependen de la red, y no deben quedar pegados en el caché del celular.
+  // No interceptamos audio, PDFs ni pedidos a otros orÃ­genes (Firebase, YouTube, fuentes, etc.):
+  // son pesados o dependen de la red, y no deben quedar pegados en el cachÃ© del celular.
   if (url.origin !== self.location.origin || url.pathname.startsWith('/audios/') || url.pathname.endsWith('.pdf')) {
     return;
   }
