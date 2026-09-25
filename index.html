@@ -16,12 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;0,6..96,900&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Firebase (compat build, para poder usarlo sin módulos ES) -->
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-check-compat.js"></script>
-<script src="app-check-config.js"></script>
+<!-- PWA autónoma: sin Firebase ni base de datos remota -->
 <style>
   :root{
     --bg:#F9F6FC;
@@ -589,36 +584,10 @@
 </div>
 
 <script>
-  /* ===================== FIREBASE ===================== */
-  const firebaseConfig = {
-    apiKey: "AIzaSyAZAWFqNBDvUziuNQl2zuRpBjLuzQtCReg",
-    authDomain: "mentora-consciente.firebaseapp.com",
-    projectId: "mentora-consciente",
-    storageBucket: "mentora-consciente.firebasestorage.app",
-    messagingSenderId: "343383357737",
-    appId: "1:343383357737:web:4627192ba747bdd0391f38"
-  };
-  // Este es el email con el que entrás como administradora. Si más adelante creás
-  // un usuario admin nuevo con otro email en Firebase Authentication, cambialo acá también.
-  const ADMIN_EMAIL = "iaravalentino33@gmail.com";
-
+  /* ===================== almacenamiento local seguro ===================== */
+  const LOCAL_DIARY_KEY = 'mentora-consciente-diary-v1';
   let db = null, auth = null, fbOk = false;
-  try {
-    firebase.initializeApp(firebaseConfig);
-    const appCheckSiteKey = String(window.MENTORA_APP_CHECK_SITE_KEY || '').trim();
-    if (appCheckSiteKey){
-      firebase.appCheck().activate(appCheckSiteKey, true);
-    } else {
-      console.warn('Firebase App Check todavía no está activado: falta registrar la app y completar app-check-config.js.');
-    }
-    auth = firebase.auth();
-    db = firebase.firestore();
-    fbOk = true;
-  } catch (e) {
-    console.warn('Firebase no se pudo inicializar:', e);
-  }
-
-  let currentUid = null;
+  let currentUid = 'local-device';
   let isAdmin = false;
 
   /* ===================== reloj y saludo ===================== */
@@ -1020,36 +989,24 @@
   }
   renderDiary();
 
-  /* ===================== persistencia por usuaria (login anónimo) ===================== */
-  let visitorCountry = null;
-  function detectCountry(){
-    return fetch('https://get.geojs.io/v1/ip/country.json')
-      .then(r => r.json())
-      .then(d => d.name || 'Desconocido')
-      .catch(() => 'Desconocido');
-  }
+  /* ===================== diario privado en este dispositivo ===================== */
   function saveUserProgress(){
-    if (!(fbOk && db && currentUid) || isAdmin) return;
-    db.collection('users').doc(currentUid).set({ diary: diaryEntries }, { merge: true })
-      .catch(err => console.warn('No se pudo guardar el progreso:', err.message));
-    db.collection('user_stats').doc(currentUid).set({
-      country: visitorCountry || 'Desconocido',
-      diaryCount: diaryEntries.length,
-      lastActive: firebase.firestore.FieldValue.serverTimestamp()
-    }, { merge: true }).catch(err => console.warn('No se pudo guardar la estadística:', err.message));
+    try{
+      localStorage.setItem(LOCAL_DIARY_KEY, JSON.stringify(diaryEntries));
+    }catch(err){
+      console.warn('No se pudo guardar el diario localmente:', err.message);
+    }
   }
-  function loadUserProgress(uid){
-    detectCountry().then(c => { visitorCountry = c; saveUserProgress(); });
-    db.collection('users').doc(uid).get().then(doc => {
-      if (doc.exists){
-        const data = doc.data();
-        diaryEntries = data.diary || [];
-      } else {
-        db.collection('users').doc(uid).set({ diary: [] });
-      }
-      renderDiary();
-      saveUserProgress();
-    }).catch(err => console.warn('No se pudo leer el progreso:', err.message));
+  function loadUserProgress(){
+    try{
+      const raw = localStorage.getItem(LOCAL_DIARY_KEY);
+      const data = raw ? JSON.parse(raw) : [];
+      diaryEntries = Array.isArray(data) ? data.slice(-500) : [];
+    }catch(err){
+      diaryEntries = [];
+      console.warn('No se pudo leer el diario local:', err.message);
+    }
+    renderDiary();
   }
 
   /* ===================== estadísticas (solo admin) ===================== */
@@ -1093,53 +1050,21 @@
     }).catch(err => console.warn('No se pudo leer user_stats:', err.message));
   }
 
-  /* ===================== autenticación ===================== */
-  if (fbOk){
-    auth.onAuthStateChanged(user => {
-      if (!user){
-        // sin sesión: intentamos anónimo para que cada seguidora tenga su progreso guardado
-        auth.signInAnonymously().catch(err => console.warn('No se pudo iniciar sesión anónima (revisá los dominios autorizados en Firebase):', err.message));
-        return;
-      }
-      currentUid = user.uid;
-      isAdmin = !!(user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
-      document.getElementById('adminBadge').classList.toggle('hidden', !isAdmin);
-      document.getElementById('adminForm').classList.add('hidden');
-      document.getElementById('adminToggleBtn').classList.toggle('hidden', isAdmin);
-      document.getElementById('adminLogoutBtn').classList.toggle('hidden', !isAdmin);
-      document.getElementById('adminPanel').classList.toggle('hidden', !isAdmin);
+  /* ===================== inicio local sin Firebase ===================== */
+  ['adminBadge','adminForm','adminToggleBtn','adminLogoutBtn','adminPanel'].forEach(id => {
+    const el=document.getElementById(id);
+    if(el) el.classList.add('hidden');
+  });
+  medLoad();
+  nesLoad();
+  loadLibraryAudios();
+  loadDailyPhrases();
+  loadHomeVideo();
+  loadUserProgress();
 
-      medLoad();
-      nesLoad();
-      loadLibraryAudios();
-      loadDailyPhrases();
-      loadHomeVideo();
-      if (!isAdmin){
-        loadUserProgress(user.uid);
-      } else {
-        loadAdminStats();
-      }
-    });
-  }
-
-  function toggleAdminForm(){
-    document.getElementById('adminForm').classList.toggle('hidden');
-  }
-  function adminLogin(){
-    const email = document.getElementById('adminEmail').value.trim();
-    const pass = document.getElementById('adminPass').value;
-    const errEl = document.getElementById('adminError');
-    errEl.classList.add('hidden');
-    if (!fbOk){ errEl.textContent = 'Firebase no está disponible en esta vista previa.'; errEl.classList.remove('hidden'); return; }
-    auth.signInWithEmailAndPassword(email, pass).catch(err => {
-      errEl.textContent = 'No se pudo ingresar: ' + err.message;
-      errEl.classList.remove('hidden');
-    });
-  }
-  function adminLogout(){
-    if (!fbOk){ return; }
-    auth.signOut().then(() => { location.reload(); }).catch(() => { location.reload(); });
-  }
+  function toggleAdminForm(){}
+  function adminLogin(){}
+  function adminLogout(){}
 
   // Registrar el service worker para que la app sea instalable (PWA)
   if ('serviceWorker' in navigator){

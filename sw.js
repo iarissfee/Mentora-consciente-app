@@ -1,9 +1,8 @@
-const CACHE_NAME = 'mentora-consciente-v3-security';
+const CACHE_NAME = 'mentora-consciente-v4-local';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
-  './app-check-config.js',
   './favicon.png',
   './assets/hero-veronica.jpg',
   './assets/logo-icon.png',
