@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'mentora-consciente-v6-menu-privacy';
+const CACHE_NAME = 'mentora-consciente-v7-menu-clean';
 const APP_SHELL = [
   './',
   './index.html',
