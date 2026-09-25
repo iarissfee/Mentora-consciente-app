@@ -20,6 +20,8 @@
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-check-compat.js"></script>
+<script src="app-check-config.js"></script>
 <style>
   :root{
     --bg:#F9F6FC;
@@ -603,6 +605,12 @@
   let db = null, auth = null, fbOk = false;
   try {
     firebase.initializeApp(firebaseConfig);
+    const appCheckSiteKey = String(window.MENTORA_APP_CHECK_SITE_KEY || '').trim();
+    if (appCheckSiteKey){
+      firebase.appCheck().activate(appCheckSiteKey, true);
+    } else {
+      console.warn('Firebase App Check todavía no está activado: falta registrar la app y completar app-check-config.js.');
+    }
     auth = firebase.auth();
     db = firebase.firestore();
     fbOk = true;
