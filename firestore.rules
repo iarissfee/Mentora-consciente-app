@@ -1,0 +1,73 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'iaravalentino33@gmail.com'
+        && request.auth.token.firebase.sign_in_provider == 'password';
+    }
+
+    // Contenido de la app: cualquier sesión Firebase puede leerlo,
+    // pero sólo la cuenta administradora puede modificarlo.
+    match /site_config/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /daily_phrases/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /library_audios/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /meditation_audios/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /no_estas_sola_audios/{docId} {
+      allow read: if signedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Cada usuaria anónima sólo puede acceder a su propio diario.
+    match /users/{uid} {
+      allow read: if isOwner(uid);
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['diary']);
+      allow delete: if false;
+    }
+
+    // La usuaria sólo escribe sus propias métricas.
+    // La administradora puede leer el agregado para el panel.
+    match /user_stats/{uid} {
+      allow read: if isAdmin();
+      allow create, update: if isOwner(uid)
+        && request.resource.data.keys().hasOnly(['country', 'diaryCount', 'lastActive'])
+        && request.resource.data.country is string
+        && request.resource.data.country.size() <= 100
+        && request.resource.data.diaryCount is int
+        && request.resource.data.diaryCount >= 0
+        && request.resource.data.diaryCount <= 10000;
+      allow delete: if false;
+    }
+
+    // Todo lo no listado explícitamente queda cerrado.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
