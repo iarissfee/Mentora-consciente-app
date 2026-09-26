@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v11-audio-restore';
+const CACHE_NAME = 'mentora-consciente-v12-prod-fresh-audios';
 const APP_SHELL = [
   './',
   './index.html',
@@ -24,6 +24,8 @@ self.addEventListener('activate', (event) => {
     caches.keys()
       .then((names) => Promise.all(names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
       .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: 'window', includeUncontrolled: true }))
+      .then((clients) => Promise.all(clients.map((client) => client.navigate(client.url))))
   );
 });
 
