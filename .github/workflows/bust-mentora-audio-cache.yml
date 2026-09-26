@@ -1,0 +1,56 @@
+name: Bust Mentora audio cache
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  bust:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish six audios under fresh filenames
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp audios/miedo-al-cambio.mp3 audios/miedo-al-cambio-20260926-v2.mp3
+          cp audios/sola-editada.mp3 audios/sola-20260926-v2.mp3
+          cp audios/fuerte-todo-el-tiempo.mp3 audios/fuerte-todo-el-tiempo-20260926-v2.mp3
+          cp audios/meditacion-descansar.mp3 audios/meditacion-descansar-20260926-v2.mp3
+          cp audios/meditacion-presencia.mp3 audios/meditacion-presencia-20260926-v2.mp3
+          cp audios/meditacion-yo-meditando.mp3 audios/meditacion-conexion-20260926-v2.mp3
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("index.html")
+          s=p.read_text(encoding="utf-8")
+          repl={
+            "miedo-al-cambio.mp3":"miedo-al-cambio-20260926-v2.mp3?v=20260926-1616",
+            "sola-editada.mp3":"sola-20260926-v2.mp3?v=20260926-1616",
+            "fuerte-todo-el-tiempo.mp3":"fuerte-todo-el-tiempo-20260926-v2.mp3?v=20260926-1616",
+            "meditacion-descansar.mp3":"meditacion-descansar-20260926-v2.mp3?v=20260926-1616",
+            "meditacion-presencia.mp3":"meditacion-presencia-20260926-v2.mp3?v=20260926-1616",
+            "meditacion-yo-meditando.mp3":"meditacion-conexion-20260926-v2.mp3?v=20260926-1616",
+          }
+          for a,b in repl.items():
+              s=s.replace(a,b)
+          p.write_text(s,encoding="utf-8")
+          p=Path("sw.js")
+          s=p.read_text(encoding="utf-8")
+          import re
+          s=re.sub(r"const CACHE_NAME = '[^']+';","const CACHE_NAME = 'mentora-consciente-v7-audio-hard-refresh';",s,count=1)
+          old="""      .then(() => self.clients.claim())"""
+          new="""      .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: 'window', includeUncontrolled: true }))
+      .then((clients) => Promise.all(clients.map((client) => client.navigate(client.url))))"""
+          if old in s:
+              s=s.replace(old,new,1)
+          p.write_text(s,encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add audios index.html sw.js
+          git commit -m "Hard refresh Mentora audio paths"
+          git push
