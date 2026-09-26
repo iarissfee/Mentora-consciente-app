@@ -135,7 +135,7 @@
       </div>
       <div class="px-8 pt-6 pb-9 flex-1 flex flex-col justify-end items-center" style="background:linear-gradient(180deg, rgba(255,242,250,0.48) 0%, rgba(205,171,228,0.65) 35%, rgba(109,190,194,0.76) 100%), url('assets/no-estas-sola.webp') 70% 30%/cover no-repeat;">
         <div class="flex flex-col items-center gap-5 mb-8">
-          <h1 class="font-display font-semibold text-[32px] leading-[1.1] tracking-[0.02em] uppercase text-center" style="color:var(--ink)">Descargá<br/>mi app</h1>
+          <h1 id="landingInstallTitle" class="font-display font-semibold text-[32px] leading-[1.1] tracking-[0.02em] uppercase text-center" style="color:var(--ink)">Descargá<br/>mi app</h1>
           <div class="w-20 h-20 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0" style="background:var(--surface); box-shadow:0 0 34px -4px rgba(196,140,255,0.6);">
             <img src="assets/logo-icon.png" alt="Mentora Consciente" class="w-12 h-12 object-contain">
           </div>
@@ -146,7 +146,7 @@
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F4F1FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Descargar Mentora Consciente
           </button>
-          <p class="text-[11px] text-center mt-3.5 tracking-wide" style="color:var(--ink-soft)">Gratis · sin App Store ni Play Store</p>
+          <p id="landingInstallNote" class="text-[11px] text-center mt-3.5 tracking-wide" style="color:var(--ink-soft)">Gratis · sin App Store ni Play Store</p>
         </div>
 
         <div id="landingSuccessBox" class="hidden text-center">
@@ -1088,9 +1088,16 @@
   const isInstagramBrowser = /instagram/i.test(ua);
   const isFacebookBrowser = /FBAN|FBAV|FB_IAB|Messenger/i.test(ua);
   const isInAppBrowser = isInstagramBrowser || isFacebookBrowser;
+  const installHandoff = new URLSearchParams(location.search).get('install') === '1';
 
   if (!isStandalone){
     document.getElementById('landingScreen').classList.remove('hidden');
+    if(installHandoff && !isInAppBrowser){
+      const title=document.getElementById('landingInstallTitle'),note=document.getElementById('landingInstallNote'),btn=document.getElementById('landingInstallBtn');
+      if(title) title.innerHTML='Último<br/>paso';
+      if(btn) btn.textContent=isIOS?'Agregar Mentora al inicio':'Instalar Mentora Consciente';
+      if(note) note.textContent=isIOS?'Agregala a tu pantalla de inicio para abrirla como app.':'Confirmá la instalación en este navegador y se crea el ícono de la app.';
+    }
     if (isIOS && isSafari){
       document.getElementById('landingIosHint').classList.remove('hidden');
       document.getElementById('iosInstallBanner').classList.remove('hidden');
