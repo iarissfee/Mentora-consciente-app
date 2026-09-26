@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v7-menu-clean';
+const CACHE_NAME = 'mentora-consciente-v8-install-all';
 const APP_SHELL = [
   './',
   './index.html',

@@ -144,21 +144,29 @@
         <div id="landingActionBox">
           <button id="landingInstallBtn" onclick="landingInstall()" class="btn-primary rowbtn w-full py-4 rounded-2xl text-[15px] font-medium flex items-center justify-center gap-2">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#F4F1FB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Mentora Consciente
+            Descargar Mentora Consciente
           </button>
-          <p class="text-[11px] text-center mt-3.5 tracking-wide" style="color:var(--ink-soft)">Gratis · un toque · sin tiendas de apps</p>
+          <p class="text-[11px] text-center mt-3.5 tracking-wide" style="color:var(--ink-soft)">Gratis · sin App Store ni Play Store</p>
         </div>
 
         <div id="landingSuccessBox" class="hidden text-center">
           <div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto" style="background:var(--sage-pale)">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0BA89A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
           </div>
-          <p class="text-[15px] font-medium mt-3">¡Listo! Ya se está instalando.</p>
-          <p class="text-[13px] mt-1.5 leading-relaxed" style="color:var(--ink-soft)">Buscá el ícono de Mentora Consciente en tu pantalla de inicio y abrilo desde ahí.</p>
+          <p class="text-[15px] font-medium mt-3">¡Listo!</p>
+          <p class="text-[13px] mt-1.5 leading-relaxed" style="color:var(--ink-soft)">Mentora Consciente quedó instalada. Buscá el ícono en la pantalla de inicio de tu celular y abrilo desde ahí.</p>
         </div>
 
         <div id="landingIosHint" class="hidden mt-4 p-4 rounded-2xl text-[12.5px] leading-relaxed w-full text-center" style="background:var(--gold-pale); color:var(--ink)">
-          Tocá el botón <strong>Compartir</strong> ⬆️ de Safari y elegí <strong>"Agregar a pantalla de inicio"</strong>.
+          En Safari tocá <strong>Compartir</strong> ⬆️ → <strong>Agregar a Inicio</strong> → activá <strong>"Abrir como app web"</strong> → <strong>Agregar</strong>. Después buscá el ícono de Mentora Consciente en tu pantalla de inicio.
+        </div>
+
+        <div id="landingIosInAppHint" class="hidden mt-4 p-4 rounded-2xl text-[12.5px] leading-relaxed w-full text-center" style="background:var(--gold-pale); color:var(--ink)">
+          En iPhone la instalación se termina en <strong>Safari</strong>. Si estás en Instagram, Facebook, Chrome u otro navegador, abrí este enlace en Safari. Después: <strong>Compartir</strong> ⬆️ → <strong>Agregar a Inicio</strong> → activá <strong>"Abrir como app web"</strong> → <strong>Agregar</strong>. Al terminar, el ícono queda en tu pantalla de inicio.
+        </div>
+
+        <div id="landingAndroidHint" class="hidden mt-4 p-4 rounded-2xl text-[12.5px] leading-relaxed w-full text-center" style="background:var(--gold-pale); color:var(--ink)">
+          Si no aparece el instalador automáticamente, tocá <strong>⋮</strong> en tu navegador y elegí <strong>"Instalar app"</strong> o <strong>"Agregar a pantalla de inicio"</strong>.
         </div>
 
         <button id="landingSkipBtn" onclick="skipLanding()" class="text-[12.5px] text-center mt-5" style="color:var(--ink-soft)">Continuar en el navegador</button>
@@ -1072,8 +1080,14 @@
   /* ===================== instalar la app / pantalla de bienvenida ===================== */
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
   let deferredInstallPrompt = null;
-  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
+  const ua = navigator.userAgent || '';
+  const isIOS = /iphone|ipad|ipod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /android/i.test(ua);
+  const isSafari = /^((?!chrome|android|crios|fxios).)*safari/i.test(ua);
+  const isChromeAndroid = isAndroid && /chrome|crios/i.test(ua) && !/edg|opr/i.test(ua);
+  const isInstagramBrowser = /instagram/i.test(ua);
+  const isFacebookBrowser = /FBAN|FBAV|FB_IAB|Messenger/i.test(ua);
+  const isInAppBrowser = isInstagramBrowser || isFacebookBrowser;
 
   if (!isStandalone){
     document.getElementById('landingScreen').classList.remove('hidden');
@@ -1088,36 +1102,76 @@
     });
   }
 
-  function installApp(){
-    if (!deferredInstallPrompt) return;
-    deferredInstallPrompt.prompt();
-    deferredInstallPrompt.userChoice.then(() => {
-      deferredInstallPrompt = null;
-      document.getElementById('installBanner').classList.add('hidden');
-    });
+  async function promptInstall(){
+    if(!deferredInstallPrompt) return false;
+    const prompt = deferredInstallPrompt;
+    deferredInstallPrompt = null;
+    await prompt.prompt();
+    const choice = await prompt.userChoice;
+    document.getElementById('installBanner').classList.add('hidden');
+    if(choice.outcome === 'accepted') showLandingSuccess();
+    return choice.outcome === 'accepted';
   }
 
-  function landingInstall(){
-    if (deferredInstallPrompt){
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then((choice) => {
-        deferredInstallPrompt = null;
-        if (choice.outcome === 'accepted'){
-          showLandingSuccess();
-        }
-        // si cancela, se queda en la pantalla de bienvenida para volver a intentar
-      });
-    } else if (isIOS && isSafari){
-      document.getElementById('landingIosHint').classList.remove('hidden');
-    } else {
-      // instalación no disponible en este navegador (ej. vista previa de escritorio): dejamos entrar igual
-      skipLanding();
+  async function installApp(){
+    if(await promptInstall()) return;
+    if(isAndroid) document.getElementById('landingAndroidHint').classList.remove('hidden');
+  }
+
+  function openChromeForInstall(){
+    const host = 'mentora-consciente-app.pages.dev';
+    const path = '/?install=1';
+    const fallback = encodeURIComponent('https://' + host + path);
+    window.location.href = 'intent://' + host + path + '#Intent;scheme=https;action=android.intent.action.VIEW;S.browser_fallback_url=' + fallback + ';end';
+  }
+
+  async function waitForInstallPrompt(ms=2800){
+    const started=Date.now();
+    while(!deferredInstallPrompt && Date.now()-started<ms){
+      await new Promise(resolve=>setTimeout(resolve,120));
     }
+    return !!deferredInstallPrompt;
+  }
+
+  async function landingInstall(){
+    if (isAndroid && isInAppBrowser){
+      const btn=document.getElementById('landingInstallBtn');
+      if(btn){btn.disabled=true;btn.textContent='Abriendo navegador…';}
+      document.getElementById('landingAndroidHint').classList.remove('hidden');
+      openChromeForInstall();
+      setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Descargar Mentora Consciente';}},2200);
+      return;
+    }
+    if (isIOS && !isSafari){
+      document.getElementById('landingIosInAppHint').classList.remove('hidden');
+      try{await navigator.clipboard.writeText('https://mentora-consciente-app.pages.dev/?install=1')}catch{}
+      return;
+    }
+    if (deferredInstallPrompt){
+      await promptInstall();
+      return;
+    }
+    if (isAndroid && isChromeAndroid){
+      const btn=document.getElementById('landingInstallBtn');
+      if(btn){btn.disabled=true;btn.textContent='Preparando instalación…';}
+      const ready=await waitForInstallPrompt();
+      if(btn){btn.disabled=false;btn.textContent='Descargar Mentora Consciente';}
+      if(ready){await promptInstall();return;}
+      document.getElementById('landingAndroidHint').classList.remove('hidden');
+      return;
+    }
+    if (isIOS && isSafari){
+      document.getElementById('landingIosHint').classList.remove('hidden');
+      return;
+    }
+    document.getElementById('landingAndroidHint').classList.remove('hidden');
   }
 
   function showLandingSuccess(){
     document.getElementById('landingActionBox').classList.add('hidden');
     document.getElementById('landingIosHint').classList.add('hidden');
+    document.getElementById('landingIosInAppHint').classList.add('hidden');
+    document.getElementById('landingAndroidHint').classList.add('hidden');
     document.getElementById('landingSkipBtn').classList.add('hidden');
     document.getElementById('landingSuccessBox').classList.remove('hidden');
   }
