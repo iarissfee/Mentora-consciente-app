@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v5-audio-restore';
+const CACHE_NAME = 'mentora-consciente-v6-user-audios-20260926';
 const APP_SHELL = [
   './',
   './index.html',
