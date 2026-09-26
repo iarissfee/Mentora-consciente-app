@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v9-install-handoff';
+const CACHE_NAME = 'mentora-consciente-v10-install-clarity';
 const APP_SHELL = [
   './',
   './index.html',

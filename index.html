@@ -1092,11 +1092,23 @@
 
   if (!isStandalone){
     document.getElementById('landingScreen').classList.remove('hidden');
+    const title=document.getElementById('landingInstallTitle'),note=document.getElementById('landingInstallNote'),btn=document.getElementById('landingInstallBtn');
     if(installHandoff && !isInAppBrowser){
-      const title=document.getElementById('landingInstallTitle'),note=document.getElementById('landingInstallNote'),btn=document.getElementById('landingInstallBtn');
       if(title) title.innerHTML='Último<br/>paso';
       if(btn) btn.textContent=isIOS?'Agregar Mentora al inicio':'Instalar Mentora Consciente';
-      if(note) note.textContent=isIOS?'Agregala a tu pantalla de inicio para abrirla como app.':'Confirmá la instalación en este navegador y se crea el ícono de la app.';
+      if(note) note.textContent=isIOS?'Paso final · agregala a tu pantalla de inicio para abrirla como app.':'Paso final · confirmá la instalación y se crea el ícono de Mentora Consciente.';
+    }else if(isAndroid && isInAppBrowser){
+      if(title) title.innerHTML='Paso 1 de 2';
+      if(btn) btn.textContent='Abrir instalador';
+      if(note) note.textContent='Se va a abrir tu navegador. Ahí sólo confirmás Instalar.';
+    }else if(isIOS && !isSafari){
+      if(title) title.innerHTML='Instalar en<br/>iPhone';
+      if(btn) btn.textContent='Ver cómo instalar';
+      if(note) note.textContent='Apple requiere completar la instalación desde Safari.';
+    }else if(isAndroid){
+      if(title) title.innerHTML='Instalá<br/>mi app';
+      if(btn) btn.textContent='Instalar Mentora Consciente';
+      if(note) note.textContent='Un toque abre el instalador de Android.';
     }
     if (isIOS && isSafari){
       document.getElementById('landingIosHint').classList.remove('hidden');
@@ -1143,10 +1155,10 @@
   async function landingInstall(){
     if (isAndroid && isInAppBrowser){
       const btn=document.getElementById('landingInstallBtn');
-      if(btn){btn.disabled=true;btn.textContent='Abriendo navegador…';}
+      if(btn){btn.disabled=true;btn.textContent='Abriendo instalador…';}
       document.getElementById('landingAndroidHint').classList.remove('hidden');
       openChromeForInstall();
-      setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Descargar Mentora Consciente';}},2200);
+      setTimeout(()=>{if(btn){btn.disabled=false;btn.textContent='Abrir instalador';}},2200);
       return;
     }
     if (isIOS && !isSafari){
