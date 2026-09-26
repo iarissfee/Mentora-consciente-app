@@ -1,0 +1,47 @@
+name: Refresh Mentora audios
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace the six user-provided audios
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p audios
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-3150-820e-8cc6-eaae8d250e6b/raw?se=2026-09-26T17%3A47%3A13Z&sp=r&sv=2026-02-06&sr=b&scid=1e0d9f43-c9a0-557b-847d-9ef43de6f13d&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-26T13%3A34%3A05Z&ske=2026-09-27T13%3A34%3A05Z&sks=b&skv=2026-02-06&sig=qARkFGpPuwUbkFT%2Bo/XxVeYVEc1XIwIvBOFSw1pevRc%3D' -o audios/miedo-al-cambio.mp3
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-a538-820e-bdb9-ea1193fd8d14/raw?se=2026-09-26T17%3A47%3A16Z&sp=r&sv=2026-02-06&sr=b&scid=7c28ba6e-3b0d-5842-9e00-dfe942f57537&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-26T13%3A34%3A51Z&ske=2026-09-27T13%3A34%3A51Z&sks=b&skv=2026-02-06&sig=wzSu0FN4ROUeBWtxt1eMI70uvL7JJwMbV7Ai%2BuKhmYs%3D' -o audios/sola-editada.mp3
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-b564-820e-8941-b7be096b53d3/raw?se=2026-09-26T17%3A47%3A19Z&sp=r&sv=2026-02-06&sr=b&scid=36a4485c-9f89-5737-beca-d7ff9221fe79&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-26T11%3A36%3A07Z&ske=2026-09-27T11%3A36%3A07Z&sks=b&skv=2026-02-06&sig=hpAaJVOCpsujME4FSAyO9PE8FvVySePeAviTpMutsRs%3D' -o audios/fuerte-todo-el-tiempo.mp3
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-5640-820e-8a36-2ccf5d4f35ec/raw?se=2026-09-26T17%3A47%3A23Z&sp=r&sv=2026-02-06&sr=b&scid=c71189a6-8850-56c5-886b-5c99a0559c75&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-25T19%3A43%3A53Z&ske=2026-09-26T19%3A43%3A53Z&sks=b&skv=2026-02-06&sig=/gyaXefVFdERjxFpFGt07bT%2BEuXBw7hKYFciwhTWmX4%3D' -o audios/meditacion-yo-meditando.mp3
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-18c0-820e-825c-4f572300ace6/raw?se=2026-09-26T17%3A47%3A26Z&sp=r&sv=2026-02-06&sr=b&scid=56c27b0b-9ba9-5987-b673-e43b1e94bd6b&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-26T12%3A40%3A10Z&ske=2026-09-27T12%3A40%3A10Z&sks=b&skv=2026-02-06&sig=8M3SWuPqiufVwlanasYXFbOn1xUkGuU0OmHOpux97lg%3D' -o audios/meditacion-descansar.mp3
+          curl -L --fail --retry 3 'https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-ec24-820e-95f9-61d8f5b891d8/raw?se=2026-09-26T17%3A47%3A29Z&sp=r&sv=2026-02-06&sr=b&scid=4d5b00bf-0aae-54f5-8a91-2d81a25883c2&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-25T19%3A41%3A48Z&ske=2026-09-26T19%3A41%3A48Z&sks=b&skv=2026-02-06&sig=4G3jyVkz5VkH5qfbywariUEjRbX0dMIMl0jEaQatbgE%3D' -o audios/meditacion-presencia.mp3
+          test "$(stat -c%s audios/miedo-al-cambio.mp3)" -gt 1000000
+          test "$(stat -c%s audios/sola-editada.mp3)" -gt 1000000
+          test "$(stat -c%s audios/fuerte-todo-el-tiempo.mp3)" -gt 1000000
+          test "$(stat -c%s audios/meditacion-yo-meditando.mp3)" -gt 1000000
+          test "$(stat -c%s audios/meditacion-descansar.mp3)" -gt 1000000
+          test "$(stat -c%s audios/meditacion-presencia.mp3)" -gt 1000000
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("index.html")
+          s=p.read_text(encoding="utf-8")
+          s=s.replace("https://d2ol7oe51mr4n9.cloudfront.net/user_3I74s4YOyToc1W8rZce3WZtNMbG/5fce7aa7-7262-49ac-9ce0-497ccd4f080e.mp3","meditacion-presencia.mp3")
+          p.write_text(s,encoding="utf-8")
+          p=Path("sw.js")
+          s=p.read_text(encoding="utf-8")
+          s=s.replace("mentora-consciente-v5-audio-restore","mentora-consciente-v6-user-audios-20260926")
+          p.write_text(s,encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add audios index.html sw.js
+          git commit -m "Replace Mentora audios with user originals"
+          git push
