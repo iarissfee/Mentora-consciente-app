@@ -1,0 +1,33 @@
+name: Deploy Mentora to Cloudflare Pages
+on:
+  push:
+    branches:
+      - cloudflare-recovery
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN_A: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TOKEN_B: ${{ secrets.CF_API_TOKEN }}
+      ACCOUNT_A: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      ACCOUNT_B: ${{ secrets.CF_ACCOUNT_ID }}
+      CAMPUS_URL: https://web.mentora-consciente.workers.dev/
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and deploy directly
+        shell: bash
+        run: |
+          set -euo pipefail
+          TOKEN="${TOKEN_A:-${TOKEN_B:-}}"
+          ACCOUNT="${ACCOUNT_A:-${ACCOUNT_B:-}}"
+          if [ -z "$TOKEN" ]; then
+            echo "NO_CLOUDFLARE_TOKEN"
+            exit 3
+          fi
+          export CLOUDFLARE_API_TOKEN="$TOKEN"
+          if [ -n "$ACCOUNT" ]; then
+            export CLOUDFLARE_ACCOUNT_ID="$ACCOUNT"
+          fi
+          npm run build
+          npx --yes wrangler@4 pages deploy dist --project-name mentora-consciente-app --branch cloudflare-recovery --commit-hash "$GITHUB_SHA" --commit-dirty=true
