@@ -1,0 +1,42 @@
+name: Verify Mentora production
+on:
+  push:
+    branches:
+      - cloudflare-recovery
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify Cloudflare production matches repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE="https://mentora-consciente-app.pages.dev"
+          ok=0
+          for n in $(seq 1 18); do
+            rm -f /tmp/index.html /tmp/sw.js /tmp/a1.mp3 /tmp/a2.mp3 /tmp/a3.mp3 /tmp/a4.mp3 /tmp/a5.mp3 /tmp/a6.mp3
+            if curl -fsSL "$BASE/index.html?verify=20260926-1616-$n" -o /tmp/index.html &&
+               curl -fsSL "$BASE/sw.js?verify=20260926-1616-$n" -o /tmp/sw.js &&
+               grep -q "miedo-al-cambio-20260926-v2.mp3" /tmp/index.html &&
+               grep -q "mentora-consciente-v12-prod-fresh-audios" /tmp/sw.js &&
+               curl -fsSL "$BASE/audios/miedo-al-cambio-20260926-v2.mp3?verify=$n" -o /tmp/a1.mp3 &&
+               curl -fsSL "$BASE/audios/sola-20260926-v2.mp3?verify=$n" -o /tmp/a2.mp3 &&
+               curl -fsSL "$BASE/audios/fuerte-todo-el-tiempo-20260926-v2.mp3?verify=$n" -o /tmp/a3.mp3 &&
+               curl -fsSL "$BASE/audios/meditacion-descansar-20260926-v2.mp3?verify=$n" -o /tmp/a4.mp3 &&
+               curl -fsSL "$BASE/audios/meditacion-presencia-20260926-v2.mp3?verify=$n" -o /tmp/a5.mp3 &&
+               curl -fsSL "$BASE/audios/meditacion-conexion-20260926-v2.mp3?verify=$n" -o /tmp/a6.mp3 &&
+               cmp -s /tmp/a1.mp3 audios/miedo-al-cambio-20260926-v2.mp3 &&
+               cmp -s /tmp/a2.mp3 audios/sola-20260926-v2.mp3 &&
+               cmp -s /tmp/a3.mp3 audios/fuerte-todo-el-tiempo-20260926-v2.mp3 &&
+               cmp -s /tmp/a4.mp3 audios/meditacion-descansar-20260926-v2.mp3 &&
+               cmp -s /tmp/a5.mp3 audios/meditacion-presencia-20260926-v2.mp3 &&
+               cmp -s /tmp/a6.mp3 audios/meditacion-conexion-20260926-v2.mp3; then
+              ok=1
+              echo "PRODUCTION_MATCHES_REPOSITORY"
+              break
+            fi
+            sleep 10
+          done
+          test "$ok" -eq 1
