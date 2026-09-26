@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mentora-consciente-v10-install-clarity';
+const CACHE_NAME = 'mentora-consciente-v11-audio-restore';
 const APP_SHELL = [
   './',
   './index.html',
